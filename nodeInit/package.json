@@ -1,0 +1,20 @@
+{
+  "name": "node-init",
+  "version": "1.0.0",
+  "description": "This is the first exercise for node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "gustengo",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.10"
+  }
+}
