@@ -3,6 +3,8 @@ const app = express();
 
 const db = require("./src/lib/db")
 
+const {authHandler} = require("./src/middlewares/authHandlers")
+
 const port = 8000
 
 //const productsRouter = require("./src/routes/products")
@@ -10,6 +12,8 @@ const port = 8000
 const apiRouter = require("./src/routes");
 
 app.use(express.json());
+
+//app.use(authHandler);
 
 apiRouter(app);
 
@@ -40,7 +44,7 @@ apiRouter(app);
 // });
 
 app.listen(port, () => {
-    console.log("listening on port 8000");
+    console.log("Listening on port: 8000");
   
     db.connect()
       .then(() => {

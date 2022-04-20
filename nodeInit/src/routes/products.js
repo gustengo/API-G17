@@ -37,6 +37,10 @@
 const express = require("express");
 const product = require("../usecases/product");
 
+const {authHandler} = require("../middlewares/authHandlers")
+const {adminHandler, staffHandler, clientHandler} = require("../middlewares/permissionHandlers");
+const { route } = require("./auth");
+
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -52,7 +56,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", clientHandler, async (req, res) => {
   const { id } = req.params;
 
   const payload = await product.getById(id);
@@ -60,7 +64,9 @@ router.get("/:id", async (req, res) => {
   res.json({ success: true, payload });
 });
 
-router.post("/", async (req, res, next) => {
+router.use(authHandler);
+
+router.post("/", staffHandler, async (req, res, next) => {
   try {
     const { name, description, price, image, categories } = req.body;
 
@@ -82,7 +88,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authHandler, adminHandler, staffHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -105,7 +111,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", authHandler, adminHandler, staffHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -121,7 +127,7 @@ router.patch("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authHandler, adminHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
 

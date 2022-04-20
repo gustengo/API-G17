@@ -13,7 +13,7 @@ const connect = () => {
       const db = mongoose.connection;
   
       db.on("open", () => {
-        console.log("Connection successful");
+        console.log("Connection successful!");
         resolve(mongoose);
       });
   
