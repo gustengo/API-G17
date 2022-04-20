@@ -60,21 +60,26 @@ router.get("/:id", async (req, res) => {
   res.json({ success: true, payload });
 });
 
-router.post("/", async (req, res) => {
-  const { name, description, price, image } = req.body;
+router.post("/", async (req, res, next) => {
+  try {
+    const { name, description, price, image, categories } = req.body;
 
-  const productCreated = await product.create({
-    name,
-    description,
-    price,
-    image,
-  });
+    const productCreated = await product.create({
+      name,
+      description,
+      price,
+      image,
+      categories,
+    });
 
-  res.json({
-    success: true,
-    message: "Producto creado",
-    payload: productCreated,
-  });
+    res.json({
+      success: true,
+      message: "Producto creado",
+      payload: productCreated,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put("/:id", async (req, res, next) => {
